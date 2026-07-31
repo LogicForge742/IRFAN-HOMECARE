@@ -1,0 +1,18 @@
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Config
+.env
+
+# Databases
+*.db
+*.sqlite
+instance/
