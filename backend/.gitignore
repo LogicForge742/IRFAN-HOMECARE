@@ -16,3 +16,8 @@ env/
 *.db
 *.sqlite
 instance/
+
+# Local/IDE Configs
+.vscode/
+.env.save
+
