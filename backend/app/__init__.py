@@ -9,8 +9,22 @@ from app.extensions import (
     migrate,
 )
 
+from app.models import User
+
+from app.routes import (
+    auth_bp,
+    patient_bp,
+    professional_bp,
+    appointment_bp,
+    availability_bp,
+    scheduling_bp,
+    dashboard_bp,
+)
+
+from app.errors import register_error_handlers
 
 def create_app() -> Flask:
+
     app = Flask(__name__)
 
     app.config.from_object(Config)
@@ -25,6 +39,16 @@ def create_app() -> Flask:
     jwt.init_app(app)
     bcrypt.init_app(app)
     migrate.init_app(app, db)
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(patient_bp)
+    app.register_blueprint(professional_bp)
+    app.register_blueprint(appointment_bp)
+    app.register_blueprint(availability_bp)
+    app.register_blueprint(scheduling_bp)
+    app.register_blueprint(dashboard_bp)
+
+    register_error_handlers(app)
 
     @app.get("/")
     def health_check():
