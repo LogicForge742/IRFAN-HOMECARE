@@ -10,6 +10,8 @@ import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
 import AppointmentsPage from "@/features/appointments/pages/AppointmentsPage";
 import { BookAppointmentPage } from "@/features/appointments/pages/BookAppointmentPage";
 import { AppointmentDetailsPage } from "@/features/appointments/pages/AppointmentDetailsPage";
+import { ProfessionalsPage } from "@/features/professionals/pages/ProfessionalsPage";
+import { ProfessionalDetailsPage } from "@/features/professionals/pages/ProfessionalDetailsPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -36,6 +38,10 @@ export const AppRouter: React.FC = () => {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/profile" element={<GenericPage title="User Profile" />} />
+
+            {/* Professional Discovery Workflow */}
+            <Route path="/professionals" element={<ProfessionalsPage />} />
+            <Route path="/professionals/:id" element={<ProfessionalDetailsPage />} />
 
             {/* Appointment Booking Workflow */}
             <Route path="/appointments" element={<AppointmentsPage />} />
