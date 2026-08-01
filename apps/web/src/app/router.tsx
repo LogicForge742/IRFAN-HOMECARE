@@ -16,6 +16,7 @@ import PaymentsPage from "@/features/payments/pages/PaymentsPage";
 import PaymentDetailsPage from "@/features/payments/pages/PaymentDetailsPage";
 import MedicalRecordsPage from "@/features/medical-records/pages/MedicalRecordsPage";
 import MedicalRecordDetailsPage from "@/features/medical-records/pages/MedicalRecordDetailsPage";
+import ConsultationPage from "@/features/consultations/pages/ConsultationPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -59,6 +60,9 @@ export const AppRouter: React.FC = () => {
             {/* Medical Records Workflow */}
             <Route path="/medical-records" element={<MedicalRecordsPage />} />
             <Route path="/medical-records/:id" element={<MedicalRecordDetailsPage />} />
+
+            {/* Clinical Consultation Entry */}
+            <Route path="/consultation" element={<ConsultationPage />} />
 
             <Route
               path="/schedule"
