@@ -7,6 +7,9 @@ import { LoginPage } from "@/features/auth/pages/LoginPage";
 import { RegisterPage } from "@/features/auth/pages/RegisterPage";
 import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage";
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
+import { AppointmentsPage } from "@/features/appointments/pages/AppointmentsPage";
+import { BookAppointmentPage } from "@/features/appointments/pages/BookAppointmentPage";
+import { AppointmentDetailsPage } from "@/features/appointments/pages/AppointmentDetailsPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -33,10 +36,12 @@ export const AppRouter: React.FC = () => {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/profile" element={<GenericPage title="User Profile" />} />
-            <Route
-              path="/appointments"
-              element={<GenericPage title="Appointments Management" />}
-            />
+
+            {/* Appointment Booking Workflow */}
+            <Route path="/appointments" element={<AppointmentsPage />} />
+            <Route path="/appointments/book" element={<BookAppointmentPage />} />
+            <Route path="/appointments/:id" element={<AppointmentDetailsPage />} />
+
             <Route
               path="/schedule"
               element={<GenericPage title="Professional Schedule" />}
