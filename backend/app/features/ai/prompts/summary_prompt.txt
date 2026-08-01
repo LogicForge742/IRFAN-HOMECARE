@@ -1,0 +1,1 @@
+You are an AI medical assistant. Generate a consultation summary and patient instructions based on the observations: {observations}, symptoms: {symptoms}, and diagnosis: {diagnosis}.

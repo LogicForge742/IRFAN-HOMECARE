@@ -3,6 +3,7 @@ import DiagnosisInput from "./DiagnosisInput";
 import PrescriptionBuilder from "./PrescriptionBuilder";
 import FileUpload from "./FileUpload";
 import { useCreateMedicalRecord } from "../hooks/useConsultation";
+import { AIAssistant } from "../../ai/components/AIAssistant";
 import type { PrescriptionInput } from "@/types/consultation";
 import { FileText, Save } from "lucide-react";
 import { toast } from "sonner";
@@ -59,6 +60,18 @@ export default function ConsultationForm({ appointmentId }: Props) {
           placeholder="Record patient vitals, physical observations, treatment plan, and follow-up advice..."
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
+        />
+      </div>
+
+      <div className="border-t border-slate-800 pt-6">
+        <AIAssistant
+          observations={notes}
+          symptoms={notes}
+          diagnosis={diagnosis}
+          onApplySummary={(val) => setNotes((n) => n ? `${n}\n\nClinical Summary:\n${val}` : `Clinical Summary:\n${val}`)}
+          onApplyDiagnosis={(val) => setDiagnosis(val)}
+          onApplyFollowup={(val) => setNotes((n) => n ? `${n}\n\nFollow-up Instructions:\n${val}` : `Follow-up Instructions:\n${val}`)}
+          onApplyInstructions={(val) => setNotes((n) => n ? `${n}\n\nPatient Home Care:\n${val}` : `Patient Home Care:\n${val}`)}
         />
       </div>
 

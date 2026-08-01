@@ -26,6 +26,8 @@ import AdminUsersPage from "@/features/admin/pages/AdminUsersPage";
 import AdminMetricsPage from "@/features/admin/pages/AdminMetricsPage";
 import VideoConsultationPage from "@/features/video/pages/VideoConsultationPage";
 import { AnalyticsDashboardPage } from "@/features/analytics/pages/AnalyticsDashboardPage";
+import { AITestPage } from "@/features/ai/pages/AITestPage";
+import { KnowledgeBasePage } from "@/features/rag/pages/KnowledgeBasePage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -63,6 +65,10 @@ export const AppRouter: React.FC = () => {
 
             {/* Clinical Consultation Entry */}
             <Route path="/consultation" element={<ConsultationPage />} />
+            <Route path="/consultation/ai-test" element={<AITestPage />} />
+
+            {/* RAG Knowledge Base */}
+            <Route path="/knowledge-base" element={<KnowledgeBasePage />} />
 
             {/* Professional Availability Management */}
             <Route path="/availability" element={<AvailabilityPage />} />

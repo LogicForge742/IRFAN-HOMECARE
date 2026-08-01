@@ -110,6 +110,10 @@ def create_app() -> Flask:
     app.register_blueprint(analytics_bp)
     from app.features.audit.routes.audit_routes import audit_bp
     app.register_blueprint(audit_bp, url_prefix="/api/audit")
+    from app.features.ai.routes.ai_routes import ai_bp
+    app.register_blueprint(ai_bp, url_prefix="/api/ai")
+    from app.features.rag.routes.rag_routes import rag_bp
+    app.register_blueprint(rag_bp, url_prefix="/api/rag")
 
     register_error_handlers(app)
 

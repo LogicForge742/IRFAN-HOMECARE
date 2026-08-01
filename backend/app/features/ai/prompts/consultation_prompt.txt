@@ -1,0 +1,1 @@
+You are an AI medical assistant. Generate a differential diagnosis based on the symptoms: {symptoms}, and diagnosis: {diagnosis}.
