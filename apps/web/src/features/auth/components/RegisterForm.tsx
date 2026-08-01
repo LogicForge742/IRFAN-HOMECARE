@@ -33,7 +33,7 @@ export const RegisterForm: React.FC = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="space-y-4 text-left">
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-300 mb-1">
           Account Role
         </label>
         <select
@@ -41,18 +41,18 @@ export const RegisterForm: React.FC = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.role}
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-slate-900 bg-white"
+          className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-100"
         >
           <option value="PATIENT">Patient</option>
           <option value="HEALTHCARE_PROFESSIONAL">Healthcare Professional</option>
         </select>
         {formik.touched.role && formik.errors.role && (
-          <p className="text-xs text-rose-600 mt-1">{formik.errors.role}</p>
+          <p className="text-xs text-rose-500 mt-1">{formik.errors.role}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-300 mb-1">
           Email Address
         </label>
         <input
@@ -62,15 +62,15 @@ export const RegisterForm: React.FC = () => {
           onBlur={formik.handleBlur}
           value={formik.values.email}
           placeholder="user@example.com"
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-slate-900"
+          className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-100"
         />
         {formik.touched.email && formik.errors.email && (
-          <p className="text-xs text-rose-600 mt-1">{formik.errors.email}</p>
+          <p className="text-xs text-rose-500 mt-1">{formik.errors.email}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-300 mb-1">
           Password
         </label>
         <input
@@ -80,24 +80,24 @@ export const RegisterForm: React.FC = () => {
           onBlur={formik.handleBlur}
           value={formik.values.password}
           placeholder="••••••••"
-          className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-slate-900"
+          className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-100"
         />
         {formik.touched.password && formik.errors.password && (
-          <p className="text-xs text-rose-600 mt-1">{formik.errors.password}</p>
+          <p className="text-xs text-rose-500 mt-1">{formik.errors.password}</p>
         )}
       </div>
 
       <button
         type="submit"
         disabled={formik.isSubmitting}
-        className="w-full bg-slate-900 text-white py-2.5 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50"
+        className="w-full bg-emerald-600 text-white py-2.5 rounded-lg font-medium hover:bg-emerald-500 transition disabled:opacity-50"
       >
         {formik.isSubmitting ? "Creating Account..." : "Create Account"}
       </button>
 
-      <p className="text-center text-sm text-slate-600 mt-4">
+      <p className="text-center text-sm text-slate-400 mt-4">
         Already have an account?{" "}
-        <Link to="/login" className="font-semibold text-primary hover:underline">
+        <Link to="/login" className="font-semibold text-emerald-400 hover:underline">
           Sign in
         </Link>
       </p>

@@ -1,40 +1,19 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AuthLayout } from "@/layouts/AuthLayout";
+import { DashboardLayout } from "@/layouts/DashboardLayout";
 import { LoginPage } from "@/features/auth/pages/LoginPage";
 import { RegisterPage } from "@/features/auth/pages/RegisterPage";
 import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage";
-import { useAuthStore } from "@/features/auth/stores/auth-store";
-
-const DashboardPage: React.FC = () => {
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-
-  return (
-    <div className="min-h-screen bg-slate-50 p-8 space-y-6">
-      <div className="max-w-4xl mx-auto bg-white border rounded-2xl p-6 shadow-sm flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-          <p className="text-sm text-slate-600">
-            Welcome back, {user?.email || "User"} ({user?.role})
-          </p>
-        </div>
-        <button
-          onClick={logout}
-          className="px-4 py-2 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition"
-        >
-          Sign Out
-        </button>
-      </div>
-    </div>
-  );
-};
+import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
-  <div className="min-h-screen bg-slate-50 p-8">
-    <div className="max-w-4xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
-      <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
-    </div>
+  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+    <h1 className="text-2xl font-bold text-white">{title}</h1>
+    <p className="text-sm text-slate-400">
+      Module view initialized and connected to Irfan HomeCare infrastructure.
+    </p>
   </div>
 );
 
@@ -42,27 +21,47 @@ export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        {/* Public Auth Routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        </Route>
 
-        {/* Protected Routes */}
+        {/* Protected Dashboard Routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/profile" element={<GenericPage title="User Profile" />} />
-          <Route
-            path="/appointments"
-            element={<GenericPage title="Appointments Management" />}
-          />
-          <Route
-            path="/payments"
-            element={<GenericPage title="Payments & Billing" />}
-          />
-          <Route
-            path="/notifications"
-            element={<GenericPage title="Notifications" />}
-          />
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/profile" element={<GenericPage title="User Profile" />} />
+            <Route
+              path="/appointments"
+              element={<GenericPage title="Appointments Management" />}
+            />
+            <Route
+              path="/schedule"
+              element={<GenericPage title="Professional Schedule" />}
+            />
+            <Route
+              path="/consultations"
+              element={<GenericPage title="Consultation Records" />}
+            />
+            <Route
+              path="/payments"
+              element={<GenericPage title="Payments & Billing" />}
+            />
+            <Route
+              path="/notifications"
+              element={<GenericPage title="Notifications" />}
+            />
+            <Route
+              path="/admin/users"
+              element={<GenericPage title="User Management" />}
+            />
+            <Route
+              path="/admin/metrics"
+              element={<GenericPage title="Platform Metrics" />}
+            />
+          </Route>
         </Route>
 
         {/* Fallback */}
