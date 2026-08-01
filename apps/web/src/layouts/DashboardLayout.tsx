@@ -3,9 +3,14 @@ import { Outlet } from "react-router-dom";
 import { Sidebar } from "@/components/navigation/Sidebar";
 import { Navbar } from "@/components/navigation/Navbar";
 import { MobileMenu } from "@/components/navigation/MobileMenu";
+import { useNotificationsSocket } from "@/realtime/useNotificationsSocket";
 
 export const DashboardLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Initialize real-time notification socket listener
+  useNotificationsSocket();
+
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex">

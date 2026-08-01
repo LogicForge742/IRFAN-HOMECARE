@@ -38,6 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "", onNavigate }) 
         return [
           { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
           { label: "User Management", to: "/admin/users", icon: Users },
+          { label: "Analytics & Reports", to: "/admin/analytics", icon: BarChart },
           { label: "Platform Metrics", to: "/admin/metrics", icon: BarChart },
           { label: "Appointments", to: "/appointments", icon: Calendar },
           { label: "Payments", to: "/payments", icon: CreditCard },

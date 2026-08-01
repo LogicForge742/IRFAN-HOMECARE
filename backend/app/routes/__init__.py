@@ -10,6 +10,7 @@ from .payment_routes import payment_bp
 from .professional_routes import professional_bp
 from .receipt_routes import receipt_bp
 from .scheduling_routes import scheduling_bp
+from .video_routes import video_bp
 
 __all__ = [
     "auth_bp",
@@ -24,4 +25,6 @@ __all__ = [
     "file_bp",
     "payment_bp",
     "receipt_bp",
+    "video_bp",
 ]
+

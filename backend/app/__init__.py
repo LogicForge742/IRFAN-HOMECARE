@@ -27,6 +27,7 @@ from app.routes import (
     professional_bp,
     receipt_bp,
     scheduling_bp,
+    video_bp,
 )
 from app.routes.health_routes import health_bp
 
@@ -63,8 +64,22 @@ def create_app() -> Flask:
     migrate.init_app(app, db)
     mail.init_app(app)
     limiter.init_app(app)
+
+    # Initialize Socket.IO
+    from app.socket.socketio import socketio
+    from app.socket import events as _events  # Ensure event handlers are registered
+    socketio.init_app(app)
+
     if app.config.get("TESTING") or os.getenv("TESTING") == "True":
         limiter.enabled = False
+    else:
+        from app.startup.environment_validator import validate_env_vars
+        from app.startup.system_checks import run_system_checks
+        from app.startup.startup_report import generate_startup_report
+        validate_env_vars()
+        run_system_checks()
+        generate_startup_report()
+
     talisman.init_app(
         app,
         content_security_policy=None,
@@ -90,6 +105,11 @@ def create_app() -> Flask:
     app.register_blueprint(file_bp)
     app.register_blueprint(payment_bp)
     app.register_blueprint(receipt_bp)
+    app.register_blueprint(video_bp)
+    from app.features.analytics.routes.analytics_routes import analytics_bp
+    app.register_blueprint(analytics_bp)
+    from app.features.audit.routes.audit_routes import audit_bp
+    app.register_blueprint(audit_bp, url_prefix="/api/audit")
 
     register_error_handlers(app)
 

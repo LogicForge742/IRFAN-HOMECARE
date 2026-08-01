@@ -24,6 +24,8 @@ import ConsultationHistoryPage from "@/features/consultation-history/pages/Consu
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 import AdminUsersPage from "@/features/admin/pages/AdminUsersPage";
 import AdminMetricsPage from "@/features/admin/pages/AdminMetricsPage";
+import VideoConsultationPage from "@/features/video/pages/VideoConsultationPage";
+import { AnalyticsDashboardPage } from "@/features/analytics/pages/AnalyticsDashboardPage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -77,7 +79,10 @@ export const AppRouter: React.FC = () => {
             {/* Admin Panel */}
             <Route path="/admin/users" element={<AdminUsersPage />} />
             <Route path="/admin/metrics" element={<AdminMetricsPage />} />
+            <Route path="/admin/analytics" element={<AnalyticsDashboardPage />} />
+            <Route path="/admin/reports" element={<AnalyticsDashboardPage />} />
           </Route>
+          <Route path="/consultation/video/:roomId" element={<VideoConsultationPage />} />
         </Route>
 
         {/* Fallback */}

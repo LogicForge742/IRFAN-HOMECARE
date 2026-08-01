@@ -2,6 +2,7 @@
 import { useAppointments } from "../hooks/useAppointments";
 import AppointmentCard from "../components/AppointmentCard";
 import { Calendar, PlusCircle } from "lucide-react";
+import CardSkeleton from "@/components/skeletons/CardSkeleton";
 import { Link } from "react-router-dom";
 
 export default function AppointmentsPage() {
@@ -9,8 +10,11 @@ export default function AppointmentsPage() {
 
   if (isLoading) {
     return (
-      <div className="p-8 text-center text-slate-400 text-sm">
-        Loading appointments...
+      <div className="grid gap-4 md:grid-cols-2">
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
       </div>
     );
   }

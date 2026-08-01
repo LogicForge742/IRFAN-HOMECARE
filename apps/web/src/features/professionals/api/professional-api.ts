@@ -1,8 +1,8 @@
 import { apiClient } from "@/infrastructure/http/api-client";
 import type {
   ProfessionalProfile,
-  ProfessionalFilterParams,
 } from "@/types/professional";
+import type { PaginatedResponse } from "@/types/common/pagination";
 
 const MOCK_PROFESSIONALS: ProfessionalProfile[] = [
   {
@@ -50,18 +50,18 @@ const MOCK_PROFESSIONALS: ProfessionalProfile[] = [
 ];
 
 export async function getProfessionals(
-  params?: ProfessionalFilterParams
-): Promise<ProfessionalProfile[]> {
+  params?: Record<string, any>
+): Promise<PaginatedResponse<ProfessionalProfile>> {
   try {
-    const response = await apiClient.get<ProfessionalProfile[]>(
+    const response = await apiClient.get<PaginatedResponse<ProfessionalProfile>>(
       "/professionals",
       { params }
     );
     return response.data;
   } catch {
     let list = [...MOCK_PROFESSIONALS];
-    if (params?.query) {
-      const q = params.query.toLowerCase();
+    if (params?.search || params?.query) {
+      const q = (params.search || params.query || "").toLowerCase();
       list = list.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
@@ -70,9 +70,29 @@ export async function getProfessionals(
       );
     }
     if (params?.specialization && params.specialization !== "ALL") {
-      list = list.filter((p) => p.specialization.includes(params.specialization!));
+      list = list.filter((p) => p.specialization.toLowerCase().includes(params.specialization.toLowerCase()));
     }
-    return list;
+    if (params?.location && params.location !== "ALL") {
+      list = list.filter((p) => p.location.toLowerCase().includes(params.location.toLowerCase()));
+    }
+
+    const page = Number(params?.page) || 1;
+    const perPage = Number(params?.per_page) || 10;
+    const total = list.length;
+    const items = list.slice((page - 1) * perPage, page * perPage);
+    const pages = Math.ceil(total / perPage);
+
+    return {
+      data: items,
+      metadata: {
+        total,
+        page,
+        per_page: perPage,
+        pages,
+        has_next: page < pages,
+        has_prev: page > 1,
+      },
+    };
   }
 }
 

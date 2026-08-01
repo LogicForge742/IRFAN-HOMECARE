@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Irfan HomeCare API
+  description: Premium Home Healthcare Platform APIs
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /health:
+    get:
+      summary: Health Check
+      responses:
+        '200':
+          description: API is healthy and services are connected.
+  /auth/login:
+    post:
+      summary: User Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string

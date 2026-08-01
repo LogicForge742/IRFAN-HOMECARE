@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProfessionals, getProfessionalById } from "../api/professional-api";
-import type { ProfessionalFilterParams } from "@/types/professional";
 
-export function useProfessionals(params?: ProfessionalFilterParams) {
+export function useProfessionals(params?: Record<string, any>) {
   return useQuery({
     queryKey: ["professionals", params],
     queryFn: () => getProfessionals(params),

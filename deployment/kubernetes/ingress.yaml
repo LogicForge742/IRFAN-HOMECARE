@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: irfan-ingress
+  namespace: irfan-homecare
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: irfan-homecare.com
+      http:
+        paths:
+          - path: /api/.*
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 5000
+          - path: /.*
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-worker
+  namespace: irfan-homecare
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: celery-worker
+  template:
+    metadata:
+      labels:
+        app: celery-worker
+    spec:
+      containers:
+        - name: celery-worker
+          image: irfan-homecare-backend:latest
+          command: ["celery", "-A", "app.celery_app", "worker", "--loglevel=info"]
+          env:
+            - name: DATABASE_URL
+              value: postgresql://postgres:admin_password_change_me@postgres:5432/irfan_db
+            - name: REDIS_URL
+              value: redis://redis:6379/0
+            - name: CELERY_BROKER_URL
+              value: redis://redis:6379/0
+            - name: JWT_SECRET_KEY
+              value: super_jwt_secret_key_change_me
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"

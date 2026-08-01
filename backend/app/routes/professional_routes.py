@@ -4,6 +4,9 @@ from marshmallow import ValidationError
 
 from app.schemas.professional_schema import ProfessionalProfileSchema
 from app.services.professional_service import ProfessionalService
+from app.schemas.common.filter_schema import FilterQuerySchema
+from app.repositories.professional_repository import ProfessionalRepository
+from app.models.user import User
 
 professional_bp = Blueprint(
     "professionals",
@@ -100,3 +103,44 @@ def update_profile():
 
     except ValueError as error:
         return jsonify({"message": str(error)}), 404
+
+
+filter_query_schema = FilterQuerySchema()
+
+
+@professional_bp.get("")
+def list_professionals():
+    try:
+        params = filter_query_schema.load(request.args)
+        result = ProfessionalRepository.find_all(params)
+
+        serialized_items = []
+        for prof in result["items"]:
+            user = User.query.get(prof.user_id)
+            user_name = f"{user.first_name} {user.last_name}" if user else "Unknown"
+            
+            serialized_items.append({
+                "id": prof.id,
+                "user_id": prof.user_id,
+                "name": user_name,
+                "license_number": prof.license_number,
+                "specialization": prof.specialization,
+                "qualification": prof.qualification,
+                "years_of_experience": prof.years_of_experience,
+                "bio": prof.bio,
+                "phone_number": prof.phone_number,
+                "consultation_fee": prof.consultation_fee,
+                "verification_status": prof.verification_status,
+                "rating": 4.9,  # Default rating details
+                "reviewCount": 34,
+                "location": "Nairobi, Westlands", # Default location
+            })
+
+        return jsonify({
+            "data": serialized_items,
+            "metadata": result["metadata"]
+        }), 200
+
+    except ValidationError as error:
+        return jsonify({"errors": error.messages}), 400
+

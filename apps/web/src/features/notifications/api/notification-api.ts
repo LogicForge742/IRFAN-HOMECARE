@@ -11,8 +11,15 @@ export interface AppNotification {
 
 export async function getNotifications(): Promise<AppNotification[]> {
   try {
-    const response = await apiClient.get<AppNotification[]>("/notifications");
-    return response.data;
+    const response = await apiClient.get<{ data: any[] }>("/notifications");
+    return response.data.data.map((n) => ({
+      id: n.id,
+      title: n.title,
+      message: n.message,
+      type: n.notification_type === "medical_record" ? "record" : n.notification_type,
+      is_read: n.is_read,
+      created_at: n.created_at,
+    }));
   } catch {
     return [
       { id: 1, title: "Appointment Confirmed", message: "Your home care visit with Dr. Osman is confirmed for tomorrow at 09:00 AM.", type: "appointment", is_read: false, created_at: new Date().toISOString() },
@@ -22,6 +29,7 @@ export async function getNotifications(): Promise<AppNotification[]> {
     ];
   }
 }
+
 
 export async function markAsRead(id: number): Promise<any> {
   try {
