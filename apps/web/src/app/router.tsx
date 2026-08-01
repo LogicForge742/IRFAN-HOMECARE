@@ -17,6 +17,7 @@ import PaymentDetailsPage from "@/features/payments/pages/PaymentDetailsPage";
 import MedicalRecordsPage from "@/features/medical-records/pages/MedicalRecordsPage";
 import MedicalRecordDetailsPage from "@/features/medical-records/pages/MedicalRecordDetailsPage";
 import ConsultationPage from "@/features/consultations/pages/ConsultationPage";
+import AvailabilityPage from "@/features/availability/pages/AvailabilityPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -63,6 +64,9 @@ export const AppRouter: React.FC = () => {
 
             {/* Clinical Consultation Entry */}
             <Route path="/consultation" element={<ConsultationPage />} />
+
+            {/* Professional Availability Management */}
+            <Route path="/availability" element={<AvailabilityPage />} />
 
             <Route
               path="/schedule"
