@@ -14,6 +14,8 @@ import { ProfessionalsPage } from "@/features/professionals/pages/ProfessionalsP
 import { ProfessionalDetailsPage } from "@/features/professionals/pages/ProfessionalDetailsPage";
 import PaymentsPage from "@/features/payments/pages/PaymentsPage";
 import PaymentDetailsPage from "@/features/payments/pages/PaymentDetailsPage";
+import MedicalRecordsPage from "@/features/medical-records/pages/MedicalRecordsPage";
+import MedicalRecordDetailsPage from "@/features/medical-records/pages/MedicalRecordDetailsPage";
 
 const GenericPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -53,6 +55,10 @@ export const AppRouter: React.FC = () => {
             {/* Payment & Financial Workflow */}
             <Route path="/payments" element={<PaymentsPage />} />
             <Route path="/payments/:id" element={<PaymentDetailsPage />} />
+
+            {/* Medical Records Workflow */}
+            <Route path="/medical-records" element={<MedicalRecordsPage />} />
+            <Route path="/medical-records/:id" element={<MedicalRecordDetailsPage />} />
 
             <Route
               path="/schedule"
