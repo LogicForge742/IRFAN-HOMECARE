@@ -28,6 +28,7 @@ import VideoConsultationPage from "@/features/video/pages/VideoConsultationPage"
 import { AnalyticsDashboardPage } from "@/features/analytics/pages/AnalyticsDashboardPage";
 import { AITestPage } from "@/features/ai/pages/AITestPage";
 import { KnowledgeBasePage } from "@/features/rag/pages/KnowledgeBasePage";
+import { FHIRPage } from "@/features/fhir/pages/FHIRPage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -69,6 +70,9 @@ export const AppRouter: React.FC = () => {
 
             {/* RAG Knowledge Base */}
             <Route path="/knowledge-base" element={<KnowledgeBasePage />} />
+
+            {/* FHIR Interoperability */}
+            <Route path="/fhir" element={<FHIRPage />} />
 
             {/* Professional Availability Management */}
             <Route path="/availability" element={<AvailabilityPage />} />

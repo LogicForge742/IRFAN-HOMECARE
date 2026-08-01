@@ -114,6 +114,8 @@ def create_app() -> Flask:
     app.register_blueprint(ai_bp, url_prefix="/api/ai")
     from app.features.rag.routes.rag_routes import rag_bp
     app.register_blueprint(rag_bp, url_prefix="/api/rag")
+    from app.features.fhir.routes.fhir_routes import fhir_bp
+    app.register_blueprint(fhir_bp, url_prefix="/api/fhir")
 
     register_error_handlers(app)
 
