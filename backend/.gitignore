@@ -10,7 +10,7 @@ ENV/
 env/
 
 # Config
-.env
+.env*
 
 # Databases
 *.db
