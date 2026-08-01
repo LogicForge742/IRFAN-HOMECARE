@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ApiError } from "@/infrastructure/errors/api-error";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -24,9 +25,16 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    const response = error.response;
+
+    if (response && response.status === 401) {
       localStorage.removeItem("token");
     }
-    return Promise.reject(error);
+
+    throw new ApiError(
+      response?.data?.message || "Request failed",
+      response?.status,
+      response?.data
+    );
   }
 );
