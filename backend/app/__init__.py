@@ -1,15 +1,19 @@
 import os
 
+import sentry_sdk
 from flasgger import Swagger
 from flask import Flask
 from flask_cors import CORS
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from app.config import Config
 from app.config.email import EmailConfig
 from app.config.security import SecurityConfig
 from app.config.swagger import swagger_config, swagger_template
+from app.core.logging import setup_logging
 from app.errors import register_error_handlers
 from app.extensions import bcrypt, db, jwt, limiter, mail, migrate, talisman
+from app.middleware.request_logger import init_request_logger
 from app.routes import (
     appointment_bp,
     auth_bp,
@@ -24,11 +28,24 @@ from app.routes import (
     receipt_bp,
     scheduling_bp,
 )
+from app.routes.health_routes import health_bp
 
 
 def create_app() -> Flask:
 
+    sentry_dsn = os.getenv("SENTRY_DSN")
+    if sentry_dsn:
+        sentry_sdk.init(
+            dsn=sentry_dsn,
+            integrations=[FlaskIntegration()],
+            traces_sample_rate=1.0,
+            profiles_sample_rate=1.0,
+        )
+
     app = Flask(__name__)
+
+    setup_logging(app)
+    init_request_logger(app)
 
     app.config.from_object(Config)
     app.config.from_object(EmailConfig)
@@ -60,6 +77,7 @@ def create_app() -> Flask:
         template=swagger_template,
     )
 
+    app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(patient_bp)
     app.register_blueprint(professional_bp)
@@ -76,7 +94,7 @@ def create_app() -> Flask:
     register_error_handlers(app)
 
     @app.get("/")
-    def health_check():
+    def root_health():
         return {
             "message": "Irfan HomeCare API is running",
             "status": "success",
