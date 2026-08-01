@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { X, Calendar, CreditCard, ShieldCheck } from "lucide-react";
-import { appointmentBookingSchema } from "../schemas/appointment-schema";
+import { appointmentSchema } from "../schemas/appointment-schema";
 import { AvailabilityCalendar } from "./AvailabilityCalendar";
 import type { HealthcareProfessional } from "@/types/appointment";
 
@@ -22,22 +22,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      professionalId: professionals[0]?.id || "",
-      serviceType: "General Nursing Checkup",
+      professional_id: professionals[0]?.id || 1,
+      availability_id: 101,
+      reason: "General Nursing Checkup",
       date: new Date().toISOString().split("T")[0],
       timeSlot: "09:00 AM",
       phoneNumber: "0712345678",
-      notes: "",
     },
-    validationSchema: appointmentBookingSchema,
+    validationSchema: appointmentSchema,
     onSubmit: async (values) => {
-      const scheduledAt = `${values.date} ${values.timeSlot}`;
       await onSubmitBooking({
-        professionalId: values.professionalId,
-        serviceType: values.serviceType,
-        scheduledAt,
+        professional_id: Number(values.professional_id),
+        availability_id: Number(values.availability_id),
+        reason: values.reason,
         phoneNumber: values.phoneNumber,
-        notes: values.notes,
       });
       onClose();
     },
@@ -45,8 +43,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   if (!isOpen) return null;
 
-  const selectedProfessional = professionals.find(
-    (p) => p.id === formik.values.professionalId
+  const selectedProf = professionals.find(
+    (p) => p.id === Number(formik.values.professional_id)
   );
 
   return (
@@ -79,37 +77,37 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               Healthcare Provider
             </label>
             <select
-              name="professionalId"
+              name="professional_id"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.professionalId}
+              value={formik.values.professional_id}
               className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             >
               {professionals.map((p) => (
                 <option key={p.id} value={p.id}>
-                  {p.name} ({p.specialization}) — {p.hourlyRate.toLocaleString()} KES/hr
+                  {p.name} ({p.specialization}) — {(p.hourlyRate ?? 3500).toLocaleString()} KES/hr
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Service Type */}
+          {/* Reason */}
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-              Service Requested
+              Reason / Consultation Details
             </label>
-            <select
-              name="serviceType"
+            <input
+              type="text"
+              name="reason"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.serviceType}
+              value={formik.values.reason}
+              placeholder="e.g. Routine Elderly Care Checkup"
               className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            >
-              <option value="General Nursing Checkup">General Nursing Checkup</option>
-              <option value="Physiotherapy Session">Physiotherapy Session</option>
-              <option value="Post-Operative Wound Care">Post-Operative Wound Care</option>
-              <option value="Elderly Companionship & Care">Elderly Care</option>
-            </select>
+            />
+            {formik.touched.reason && formik.errors.reason && (
+              <p className="text-xs text-rose-500 mt-1">{formik.errors.reason}</p>
+            )}
           </div>
 
           {/* Visit Date */}
@@ -127,18 +125,21 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             />
           </div>
 
-          {/* Time Slot Availability */}
+          {/* Availability Slots */}
           <AvailabilityCalendar
-            professionalId={formik.values.professionalId}
+            professionalId={formik.values.professional_id}
             selectedDate={formik.values.date}
             selectedTimeSlot={formik.values.timeSlot}
-            onSelectSlot={(slot) => formik.setFieldValue("timeSlot", slot)}
+            onSelectSlot={(slotTime, slotId) => {
+              formik.setFieldValue("timeSlot", slotTime);
+              if (slotId) formik.setFieldValue("availability_id", slotId);
+            }}
           />
 
-          {/* M-Pesa Phone Number */}
+          {/* M-Pesa Phone */}
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-              M-Pesa Phone Number (For Payment Push)
+              M-Pesa Phone Number
             </label>
             <div className="relative">
               <input
@@ -152,27 +153,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               />
               <CreditCard className="w-4 h-4 text-emerald-400 absolute right-3 top-3" />
             </div>
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <p className="text-xs text-rose-500 mt-1">
-                {formik.errors.phoneNumber}
-              </p>
-            )}
-          </div>
-
-          {/* Notes */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-              Special Instructions / Notes
-            </label>
-            <textarea
-              name="notes"
-              rows={2}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.notes}
-              placeholder="e.g. Patient requires wheelchair assistance..."
-              className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            />
           </div>
 
           {/* Total & Action */}
@@ -180,7 +160,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <div>
               <p className="text-xs text-slate-400">Total Consultation Fee</p>
               <p className="text-lg font-bold text-emerald-400">
-                {selectedProfessional?.hourlyRate?.toLocaleString() || 3500} KES
+                {(selectedProf?.hourlyRate ?? 3500).toLocaleString()} KES
               </p>
             </div>
             <button

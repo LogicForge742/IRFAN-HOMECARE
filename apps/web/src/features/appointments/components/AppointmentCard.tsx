@@ -1,55 +1,42 @@
-import React from "react";
-import type { Appointment } from "@/types/appointment";
-import { AppointmentStatusBadge } from "./AppointmentStatusBadge";
-import { Calendar, Clock, CreditCard, User, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
-interface AppointmentCardProps {
+import type { Appointment } from "@/types/appointment";
+import AppointmentStatusBadge from "./AppointmentStatusBadge";
+import { Calendar, Clock, User } from "lucide-react";
+
+interface Props {
   appointment: Appointment;
 }
 
-export const AppointmentCard: React.FC<AppointmentCardProps> = ({
-  appointment,
-}) => {
+export default function AppointmentCard({ appointment }: Props) {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4 hover:border-slate-700 transition">
+    <div className="border border-slate-800 rounded-2xl p-5 bg-slate-900 shadow-lg space-y-3 hover:border-slate-700 transition">
       <div className="flex items-start justify-between">
-        <div className="space-y-1">
-          <h4 className="font-bold text-white text-lg">
-            {appointment.serviceType}
-          </h4>
-          <div className="flex items-center space-x-2 text-sm text-slate-400">
+        <div>
+          <h3 className="font-bold text-white text-lg flex items-center space-x-2">
             <User className="w-4 h-4 text-emerald-400" />
-            <span>{appointment.professionalName}</span>
-          </div>
+            <span>
+              {appointment.professional?.name ?? "Healthcare Professional"}
+            </span>
+          </h3>
+          {appointment.reason && (
+            <p className="text-xs text-slate-400 mt-1">{appointment.reason}</p>
+          )}
         </div>
         <AppointmentStatusBadge status={appointment.status} />
       </div>
 
-      <div className="grid grid-cols-2 gap-3 pt-2 text-xs border-t border-slate-800/80">
-        <div className="flex items-center space-x-2 text-slate-300">
-          <Calendar className="w-4 h-4 text-slate-400" />
-          <span>{appointment.scheduledAt}</span>
+      <div className="flex items-center space-x-4 text-xs text-slate-300 pt-2 border-t border-slate-800">
+        <div className="flex items-center space-x-1.5">
+          <Calendar className="w-3.5 h-3.5 text-slate-400" />
+          <span>{appointment.appointment_date}</span>
         </div>
-        <div className="flex items-center space-x-2 text-slate-300">
-          <Clock className="w-4 h-4 text-slate-400" />
-          <span>{appointment.durationMinutes} Mins</span>
+        <div className="flex items-center space-x-1.5">
+          <Clock className="w-3.5 h-3.5 text-slate-400" />
+          <span>
+            {appointment.start_time} - {appointment.end_time}
+          </span>
         </div>
-      </div>
-
-      <div className="flex items-center justify-between pt-2">
-        <div className="flex items-center space-x-2 text-sm font-semibold text-emerald-400">
-          <CreditCard className="w-4 h-4" />
-          <span>{appointment.amount.toLocaleString()} KES</span>
-        </div>
-        <Link
-          to={`/appointments/${appointment.id}`}
-          className="inline-flex items-center space-x-1 text-xs font-semibold text-slate-300 hover:text-white transition"
-        >
-          <span>Details</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
       </div>
     </div>
   );
-};
+}

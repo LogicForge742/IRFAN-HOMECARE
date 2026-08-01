@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { AppointmentStatusBadge } from "../components/AppointmentStatusBadge";
+import AppointmentStatusBadge from "../components/AppointmentStatusBadge";
 import { Calendar, User, ArrowLeft, ShieldCheck, FileText } from "lucide-react";
 
 export const AppointmentDetailsPage: React.FC = () => {

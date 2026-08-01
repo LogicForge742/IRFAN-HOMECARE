@@ -7,7 +7,7 @@ import { LoginPage } from "@/features/auth/pages/LoginPage";
 import { RegisterPage } from "@/features/auth/pages/RegisterPage";
 import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage";
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
-import { AppointmentsPage } from "@/features/appointments/pages/AppointmentsPage";
+import AppointmentsPage from "@/features/appointments/pages/AppointmentsPage";
 import { BookAppointmentPage } from "@/features/appointments/pages/BookAppointmentPage";
 import { AppointmentDetailsPage } from "@/features/appointments/pages/AppointmentDetailsPage";
 

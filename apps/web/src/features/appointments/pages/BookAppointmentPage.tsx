@@ -3,14 +3,15 @@ import { useAppointments } from "../hooks/useAppointments";
 import { BookingModal } from "../components/BookingModal";
 import { UserCheck, Star, MapPin, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import type { Professional } from "@/types/appointment";
 
 export const BookAppointmentPage: React.FC = () => {
   const navigate = useNavigate();
   const { professionals, createAppointment, isBooking } = useAppointments();
-  const [selectedProfId, setSelectedProfId] = useState<string | null>(null);
+  const [selectedProfId, setSelectedProfId] = useState<number | null>(null);
 
-  const selectedProfList = selectedProfId
-    ? professionals.filter((p) => p.id === selectedProfId)
+  const selectedProfList: Professional[] = selectedProfId
+    ? professionals.filter((p: Professional) => p.id === selectedProfId)
     : professionals;
 
   return (
@@ -27,7 +28,7 @@ export const BookAppointmentPage: React.FC = () => {
 
       {/* Professionals List */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {professionals.map((prof) => (
+        {professionals.map((prof: Professional) => (
           <div
             key={prof.id}
             className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4 hover:border-emerald-500/50 transition flex flex-col justify-between"
@@ -39,7 +40,7 @@ export const BookAppointmentPage: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
                   <Star className="w-3.5 h-3.5 fill-current" />
-                  <span>{prof.rating}</span>
+                  <span>{prof.rating ?? 4.9}</span>
                 </div>
               </div>
 
@@ -53,11 +54,11 @@ export const BookAppointmentPage: React.FC = () => {
               <div className="space-y-1.5 text-xs text-slate-400 pt-2 border-t border-slate-800">
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                  <span>{prof.location}</span>
+                  <span>{prof.location ?? "Nairobi Region"}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <UserCheck className="w-3.5 h-3.5 text-slate-500" />
-                  <span>{prof.availableDays.join(", ")}</span>
+                  <span>{(prof.availableDays ?? ["Mon", "Wed", "Fri"]).join(", ")}</span>
                 </div>
               </div>
             </div>
@@ -68,7 +69,7 @@ export const BookAppointmentPage: React.FC = () => {
                   Hourly Rate
                 </span>
                 <p className="text-base font-bold text-white">
-                  {prof.hourlyRate.toLocaleString()} KES
+                  {(prof.hourlyRate ?? 3500).toLocaleString()} KES
                 </p>
               </div>
 
@@ -85,9 +86,9 @@ export const BookAppointmentPage: React.FC = () => {
       </div>
 
       {/* Modal */}
-      {selectedProfId && (
+      {selectedProfId !== null && (
         <BookingModal
-          isOpen={!!selectedProfId}
+          isOpen={selectedProfId !== null}
           onClose={() => setSelectedProfId(null)}
           professionals={selectedProfList}
           onSubmitBooking={async (values) => {
