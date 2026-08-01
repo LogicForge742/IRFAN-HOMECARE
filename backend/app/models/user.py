@@ -85,3 +85,17 @@ class User(db.Model):
         onupdate=datetime.utcnow,
         nullable=False,
     )
+
+    sso_provider = db.Column(
+        db.String(50),
+        nullable=True,
+    )
+
+    sso_subject_id = db.Column(
+        db.String(255),
+        nullable=True,
+    )
+
+    @property
+    def name(self):
+        return f"{self.first_name} {self.last_name}"

@@ -29,6 +29,7 @@ import { AnalyticsDashboardPage } from "@/features/analytics/pages/AnalyticsDash
 import { AITestPage } from "@/features/ai/pages/AITestPage";
 import { KnowledgeBasePage } from "@/features/rag/pages/KnowledgeBasePage";
 import { FHIRPage } from "@/features/fhir/pages/FHIRPage";
+import { SSOPage } from "@/features/sso/pages/SSOPage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -73,6 +74,9 @@ export const AppRouter: React.FC = () => {
 
             {/* FHIR Interoperability */}
             <Route path="/fhir" element={<FHIRPage />} />
+
+            {/* Single Sign-On */}
+            <Route path="/sso" element={<SSOPage />} />
 
             {/* Professional Availability Management */}
             <Route path="/availability" element={<AvailabilityPage />} />
