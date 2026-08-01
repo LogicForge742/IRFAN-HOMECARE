@@ -1,15 +1,10 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from marshmallow import ValidationError
-
-from flask_jwt_extended import (
-    jwt_required,
-    get_jwt_identity,
-)
 
 from app.schemas.appointment_schema import AppointmentSchema
 from app.services.appointment_service import AppointmentService
 from app.utils.decorators import roles_required
-
 
 appointment_bp = Blueprint(
     "appointments",
@@ -33,27 +28,47 @@ def create_appointment():
             data,
         )
 
-        return jsonify({
-            "message": "Appointment created successfully",
-            "data": result,
-        }), 201
+        return (
+            jsonify(
+                {
+                    "message": "Appointment created successfully",
+                    "data": result,
+                }
+            ),
+            201,
+        )
 
     except ValidationError as error:
-        return jsonify({
-            "errors": error.messages,
-        }), 400
+        return (
+            jsonify(
+                {
+                    "errors": error.messages,
+                }
+            ),
+            400,
+        )
 
     except ValueError as error:
         message = str(error)
 
         if "already booked" in message:
-            return jsonify({
-                "message": message,
-            }), 409
+            return (
+                jsonify(
+                    {
+                        "message": message,
+                    }
+                ),
+                409,
+            )
 
-        return jsonify({
-            "message": message,
-        }), 400
+        return (
+            jsonify(
+                {
+                    "message": message,
+                }
+            ),
+            400,
+        )
 
 
 @appointment_bp.get("/")
@@ -65,9 +80,14 @@ def get_my_appointments():
         patient_id,
     )
 
-    return jsonify({
-        "data": appointments,
-    }), 200
+    return (
+        jsonify(
+            {
+                "data": appointments,
+            }
+        ),
+        200,
+    )
 
 
 @appointment_bp.put("/<appointment_id>/status")
@@ -82,12 +102,22 @@ def update_status(appointment_id):
             data["status"],
         )
 
-        return jsonify({
-            "message": "Appointment updated successfully",
-            "data": result,
-        }), 200
+        return (
+            jsonify(
+                {
+                    "message": "Appointment updated successfully",
+                    "data": result,
+                }
+            ),
+            200,
+        )
 
     except ValueError as error:
-        return jsonify({
-            "message": str(error),
-        }), 400
+        return (
+            jsonify(
+                {
+                    "message": str(error),
+                }
+            ),
+            400,
+        )

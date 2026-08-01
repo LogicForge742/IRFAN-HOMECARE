@@ -6,10 +6,11 @@ class PatientRepository:
 
     @staticmethod
     def get_by_user_id(user_id):
-        return Patient.query.filter_by(
-            user_id=user_id
-        ).first()
+        return Patient.query.filter_by(user_id=user_id).first()
 
+    @staticmethod
+    def get_by_id(patient_id):
+        return Patient.query.get(patient_id)
 
     @staticmethod
     def create(patient):
@@ -17,7 +18,6 @@ class PatientRepository:
         db.session.commit()
 
         return patient
-
 
     @staticmethod
     def update(patient):

@@ -1,18 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from marshmallow import ValidationError
 
-from flask_jwt_extended import (
-    jwt_required,
-    get_jwt_identity,
-)
-
-from app.schemas.professional_schema import (
-    ProfessionalProfileSchema,
-)
-from app.services.professional_service import (
-    ProfessionalService,
-)
-
+from app.schemas.professional_schema import ProfessionalProfileSchema
+from app.services.professional_service import ProfessionalService
 
 professional_bp = Blueprint(
     "professionals",
@@ -31,29 +22,28 @@ def create_profile():
     try:
         user_id = get_jwt_identity()
 
-        data = professional_schema.load(
-            request.json
-        )
+        data = professional_schema.load(request.json)
 
         result = ProfessionalService.create_profile(
             user_id,
             data,
         )
 
-        return jsonify({
-            "message": "Professional profile created successfully",
-            "data": result,
-        }), 201
+        return (
+            jsonify(
+                {
+                    "message": "Professional profile created successfully",
+                    "data": result,
+                }
+            ),
+            201,
+        )
 
     except ValidationError as error:
-        return jsonify({
-            "errors": error.messages
-        }), 400
+        return jsonify({"errors": error.messages}), 400
 
     except ValueError as error:
-        return jsonify({
-            "message": str(error)
-        }), 409
+        return jsonify({"message": str(error)}), 409
 
 
 @professional_bp.get("/profile")
@@ -63,18 +53,19 @@ def get_profile():
     try:
         user_id = get_jwt_identity()
 
-        result = ProfessionalService.get_profile(
-            user_id
+        result = ProfessionalService.get_profile(user_id)
+
+        return (
+            jsonify(
+                {
+                    "data": result,
+                }
+            ),
+            200,
         )
 
-        return jsonify({
-            "data": result,
-        }), 200
-
     except ValueError as error:
-        return jsonify({
-            "message": str(error)
-        }), 404
+        return jsonify({"message": str(error)}), 404
 
 
 @professional_bp.put("/profile")
@@ -94,17 +85,18 @@ def update_profile():
             data,
         )
 
-        return jsonify({
-            "message": "Professional profile updated successfully",
-            "data": result,
-        }), 200
+        return (
+            jsonify(
+                {
+                    "message": "Professional profile updated successfully",
+                    "data": result,
+                }
+            ),
+            200,
+        )
 
     except ValidationError as error:
-        return jsonify({
-            "errors": error.messages
-        }), 400
+        return jsonify({"errors": error.messages}), 400
 
     except ValueError as error:
-        return jsonify({
-            "message": str(error)
-        }), 404
+        return jsonify({"message": str(error)}), 404

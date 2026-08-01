@@ -1,9 +1,5 @@
-from app.repositories.professional_repository import (
-    ProfessionalRepository,
-)
-from app.repositories.appointment_repository import (
-    AppointmentRepository,
-)
+from app.repositories.appointment_repository import AppointmentRepository
+from app.repositories.professional_repository import ProfessionalRepository
 
 
 class DashboardService:
@@ -11,42 +7,26 @@ class DashboardService:
     @staticmethod
     def get_professional_dashboard(user_id):
 
-        professional = (
-            ProfessionalRepository.get_by_user_id(
-                user_id
-            )
-        )
+        professional = ProfessionalRepository.get_by_user_id(user_id)
 
         if not professional:
-            raise ValueError(
-                "Healthcare professional profile not found."
-            )
+            raise ValueError("Healthcare professional profile not found.")
 
-        today = (
-            AppointmentRepository.get_today_appointments(
-                professional.id
-            )
+        today = AppointmentRepository.get_today_appointments(professional.id)
+
+        pending = AppointmentRepository.get_by_professional_and_status(
+            professional.id,
+            "pending",
         )
 
-        pending = (
-            AppointmentRepository.get_by_professional_and_status(
-                professional.id,
-                "pending",
-            )
+        confirmed = AppointmentRepository.get_by_professional_and_status(
+            professional.id,
+            "confirmed",
         )
 
-        confirmed = (
-            AppointmentRepository.get_by_professional_and_status(
-                professional.id,
-                "confirmed",
-            )
-        )
-
-        completed = (
-            AppointmentRepository.get_by_professional_and_status(
-                professional.id,
-                "completed",
-            )
+        completed = AppointmentRepository.get_by_professional_and_status(
+            professional.id,
+            "completed",
         )
 
         return {

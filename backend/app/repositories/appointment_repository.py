@@ -18,15 +18,11 @@ class AppointmentRepository:
 
     @staticmethod
     def get_by_patient(patient_id):
-        return Appointment.query.filter_by(
-            patient_id=patient_id
-        ).all()
+        return Appointment.query.filter_by(patient_id=patient_id).all()
 
     @staticmethod
     def get_by_professional(professional_id):
-        return Appointment.query.filter_by(
-            professional_id=professional_id
-        ).all()
+        return Appointment.query.filter_by(professional_id=professional_id).all()
 
     @staticmethod
     def get_by_professional_and_schedule(
@@ -45,24 +41,20 @@ class AppointmentRepository:
         professional_id,
         appointment_date,
     ):
-        return (
-            Appointment.query.filter_by(
-                professional_id=professional_id,
-                appointment_date=appointment_date,
-            ).all()
-        )
+        return Appointment.query.filter_by(
+            professional_id=professional_id,
+            appointment_date=appointment_date,
+        ).all()
 
     @staticmethod
     def get_by_professional_and_status(
         professional_id,
         status,
     ):
-        return (
-            Appointment.query.filter_by(
-                professional_id=professional_id,
-                status=status,
-            ).all()
-        )
+        return Appointment.query.filter_by(
+            professional_id=professional_id,
+            status=status,
+        ).all()
 
     @staticmethod
     def get_today_appointments(

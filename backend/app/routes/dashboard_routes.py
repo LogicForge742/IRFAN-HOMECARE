@@ -1,15 +1,8 @@
 from flask import Blueprint, jsonify
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
-from flask_jwt_extended import (
-    jwt_required,
-    get_jwt_identity,
-)
-
-from app.services.dashboard_service import (
-    DashboardService,
-)
+from app.services.dashboard_service import DashboardService
 from app.utils.decorators import roles_required
-
 
 dashboard_bp = Blueprint(
     "dashboard",
@@ -25,10 +18,6 @@ def professional_dashboard():
 
     user_id = get_jwt_identity()
 
-    dashboard = (
-        DashboardService.get_professional_dashboard(
-            user_id
-        )
-    )
+    dashboard = DashboardService.get_professional_dashboard(user_id)
 
     return jsonify(dashboard), 200

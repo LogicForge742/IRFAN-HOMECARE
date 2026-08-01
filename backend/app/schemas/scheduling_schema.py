@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, RAISE
+from marshmallow import RAISE, Schema, fields
 
 
 class AvailableSlotsSchema(Schema):

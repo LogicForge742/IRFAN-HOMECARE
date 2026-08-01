@@ -7,14 +7,10 @@ class PatientService:
     @staticmethod
     def create_profile(user_id, data):
 
-        existing_patient = PatientRepository.get_by_user_id(
-            user_id
-        )
+        existing_patient = PatientRepository.get_by_user_id(user_id)
 
         if existing_patient:
-            raise ValueError(
-                "Patient profile already exists"
-            )
+            raise ValueError("Patient profile already exists")
 
         patient = Patient(
             user_id=user_id,
@@ -25,33 +21,23 @@ class PatientService:
 
         return PatientService.serialize(patient)
 
-
     @staticmethod
     def get_profile(user_id):
 
-        patient = PatientRepository.get_by_user_id(
-            user_id
-        )
+        patient = PatientRepository.get_by_user_id(user_id)
 
         if not patient:
-            raise ValueError(
-                "Patient profile not found"
-            )
+            raise ValueError("Patient profile not found")
 
         return PatientService.serialize(patient)
-
 
     @staticmethod
     def update_profile(user_id, data):
 
-        patient = PatientRepository.get_by_user_id(
-            user_id
-        )
+        patient = PatientRepository.get_by_user_id(user_id)
 
         if not patient:
-            raise ValueError(
-                "Patient profile not found"
-            )
+            raise ValueError("Patient profile not found")
 
         for key, value in data.items():
             setattr(
@@ -64,7 +50,6 @@ class PatientService:
 
         return PatientService.serialize(patient)
 
-
     @staticmethod
     def serialize(patient):
 
@@ -73,9 +58,7 @@ class PatientService:
             "user_id": patient.user_id,
             "phone_number": patient.phone_number,
             "date_of_birth": (
-                patient.date_of_birth.isoformat()
-                if patient.date_of_birth
-                else None
+                patient.date_of_birth.isoformat() if patient.date_of_birth else None
             ),
             "gender": patient.gender,
             "address": patient.address,

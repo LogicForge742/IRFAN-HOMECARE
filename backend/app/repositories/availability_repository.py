@@ -26,8 +26,7 @@ class AvailabilityRepository:
     @staticmethod
     def get_by_professional(professional_id):
         return (
-            Availability.query
-            .filter_by(professional_id=professional_id)
+            Availability.query.filter_by(professional_id=professional_id)
             .order_by(
                 Availability.day_of_week,
                 Availability.start_time,
@@ -41,8 +40,7 @@ class AvailabilityRepository:
         day_of_week,
     ):
         return (
-            Availability.query
-            .filter_by(
+            Availability.query.filter_by(
                 professional_id=professional_id,
                 day_of_week=day_of_week,
             )

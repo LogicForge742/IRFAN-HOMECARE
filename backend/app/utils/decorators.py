@@ -15,19 +15,18 @@ def roles_required(*allowed_roles):
             user = User.query.get(user_id)
 
             if user is None:
-                return jsonify({
-                    "message": "User not found"
-                }), 404
+                return jsonify({"message": "User not found"}), 404
 
             if not user.is_active:
-                return jsonify({
-                    "message": "Account is inactive"
-                }), 403
+                return jsonify({"message": "Account is inactive"}), 403
 
             if user.role not in allowed_roles:
-                return jsonify({
-                    "message": "You are not authorized to perform this action"
-                }), 403
+                return (
+                    jsonify(
+                        {"message": "You are not authorized to perform this action"}
+                    ),
+                    403,
+                )
 
             return fn(*args, **kwargs)
 

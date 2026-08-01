@@ -10,9 +10,7 @@ class ProfessionalService:
         if ProfessionalRepository.get_by_user_id(user_id):
             raise ValueError("Professional profile already exists.")
 
-        if ProfessionalRepository.license_exists(
-            data["license_number"]
-        ):
+        if ProfessionalRepository.license_exists(data["license_number"]):
             raise ValueError("License number already exists.")
 
         professional = HealthcareProfessional(
@@ -38,9 +36,7 @@ class ProfessionalService:
     @staticmethod
     def get_profile(user_id):
 
-        professional = ProfessionalRepository.get_by_user_id(
-            user_id
-        )
+        professional = ProfessionalRepository.get_by_user_id(user_id)
 
         if not professional:
             raise ValueError("Professional profile not found.")
@@ -61,9 +57,7 @@ class ProfessionalService:
     @staticmethod
     def update_profile(user_id, data):
 
-        professional = ProfessionalRepository.get_by_user_id(
-            user_id
-        )
+        professional = ProfessionalRepository.get_by_user_id(user_id)
 
         if not professional:
             raise ValueError("Professional profile not found.")

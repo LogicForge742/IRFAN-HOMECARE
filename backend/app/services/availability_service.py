@@ -1,10 +1,6 @@
 from app.models.availability import Availability
-from app.repositories.availability_repository import (
-    AvailabilityRepository,
-)
-from app.repositories.professional_repository import (
-    ProfessionalRepository,
-)
+from app.repositories.availability_repository import AvailabilityRepository
+from app.repositories.professional_repository import ProfessionalRepository
 
 
 class AvailabilityService:
@@ -12,25 +8,17 @@ class AvailabilityService:
     @staticmethod
     def create_availability(user_id, data):
 
-        professional = ProfessionalRepository.get_by_user_id(
-            user_id
-        )
+        professional = ProfessionalRepository.get_by_user_id(user_id)
 
         if not professional:
-            raise ValueError(
-                "Healthcare professional profile not found."
-            )
+            raise ValueError("Healthcare professional profile not found.")
 
         if data["start_time"] >= data["end_time"]:
-            raise ValueError(
-                "Start time must be before end time."
-            )
+            raise ValueError("Start time must be before end time.")
 
-        existing = (
-            AvailabilityRepository.get_by_professional_and_day(
-                professional.id,
-                data["day_of_week"],
-            )
+        existing = AvailabilityRepository.get_by_professional_and_day(
+            professional.id,
+            data["day_of_week"],
         )
 
         for slot in existing:
@@ -41,9 +29,7 @@ class AvailabilityService:
             )
 
             if overlaps:
-                raise ValueError(
-                    "Availability overlaps with an existing schedule."
-                )
+                raise ValueError("Availability overlaps with an existing schedule.")
 
         availability = Availability(
             professional_id=professional.id,
@@ -53,9 +39,7 @@ class AvailabilityService:
             is_available=data.get("is_available", True),
         )
 
-        AvailabilityRepository.create(
-            availability
-        )
+        AvailabilityRepository.create(availability)
 
         return {
             "id": availability.id,
@@ -69,20 +53,12 @@ class AvailabilityService:
     @staticmethod
     def get_my_availability(user_id):
 
-        professional = ProfessionalRepository.get_by_user_id(
-            user_id
-        )
+        professional = ProfessionalRepository.get_by_user_id(user_id)
 
         if not professional:
-            raise ValueError(
-                "Healthcare professional profile not found."
-            )
+            raise ValueError("Healthcare professional profile not found.")
 
-        schedules = (
-            AvailabilityRepository.get_by_professional(
-                professional.id
-            )
-        )
+        schedules = AvailabilityRepository.get_by_professional(professional.id)
 
         return [
             {

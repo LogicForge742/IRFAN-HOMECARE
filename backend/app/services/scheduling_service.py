@@ -1,14 +1,7 @@
 from datetime import datetime, timedelta
 
-from app.repositories.availability_repository import (
-    AvailabilityRepository,
-)
-from app.repositories.appointment_repository import (
-    AppointmentRepository,
-)
-from app.repositories.professional_repository import (
-    ProfessionalRepository,
-)
+from app.repositories.appointment_repository import AppointmentRepository
+from app.repositories.availability_repository import AvailabilityRepository
 
 
 class SchedulingService:
@@ -23,24 +16,17 @@ class SchedulingService:
 
         weekday = appointment_date.weekday()
 
-        availability = (
-            AvailabilityRepository.get_by_professional_and_day(
-                professional_id,
-                weekday,
-            )
+        availability = AvailabilityRepository.get_by_professional_and_day(
+            professional_id,
+            weekday,
         )
 
-        booked = (
-            AppointmentRepository.get_by_professional_and_date(
-                professional_id,
-                appointment_date,
-            )
+        booked = AppointmentRepository.get_by_professional_and_date(
+            professional_id,
+            appointment_date,
         )
 
-        booked_times = {
-            appointment.appointment_time
-            for appointment in booked
-        }
+        booked_times = {appointment.appointment_time for appointment in booked}
 
         available_slots = []
 
@@ -61,12 +47,8 @@ class SchedulingService:
                 slot = current.time()
 
                 if slot not in booked_times:
-                    available_slots.append(
-                        slot.strftime("%H:%M")
-                    )
+                    available_slots.append(slot.strftime("%H:%M"))
 
-                current += timedelta(
-                    minutes=SchedulingService.SLOT_DURATION
-                )
+                current += timedelta(minutes=SchedulingService.SLOT_DURATION)
 
         return available_slots

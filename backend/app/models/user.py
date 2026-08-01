@@ -47,6 +47,32 @@ class User(db.Model):
         nullable=False,
     )
 
+    email_verified = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False,
+    )
+
+    verification_token = db.Column(
+        db.String(255),
+        nullable=True,
+    )
+
+    verification_token_expires_at = db.Column(
+        db.DateTime,
+        nullable=True,
+    )
+
+    password_reset_token = db.Column(
+        db.String(255),
+        nullable=True,
+    )
+
+    password_reset_token_expires_at = db.Column(
+        db.DateTime,
+        nullable=True,
+    )
+
     created_at = db.Column(
         db.DateTime,
         default=datetime.utcnow,

@@ -6,9 +6,7 @@ class ProfessionalRepository:
 
     @staticmethod
     def get_by_user_id(user_id):
-        return HealthcareProfessional.query.filter_by(
-            user_id=user_id
-        ).first()
+        return HealthcareProfessional.query.filter_by(user_id=user_id).first()
 
     @staticmethod
     def get_by_license_number(license_number):
@@ -35,7 +33,6 @@ class ProfessionalRepository:
     @staticmethod
     def update():
         db.session.commit()
-
 
     @staticmethod
     def get_by_id(professional_id):
