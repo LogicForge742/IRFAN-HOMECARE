@@ -18,15 +18,12 @@ import MedicalRecordsPage from "@/features/medical-records/pages/MedicalRecordsP
 import MedicalRecordDetailsPage from "@/features/medical-records/pages/MedicalRecordDetailsPage";
 import ConsultationPage from "@/features/consultations/pages/ConsultationPage";
 import AvailabilityPage from "@/features/availability/pages/AvailabilityPage";
-
-const GenericPage: React.FC<{ title: string }> = ({ title }) => (
-  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-    <h1 className="text-2xl font-bold text-white">{title}</h1>
-    <p className="text-sm text-slate-400">
-      Module view initialized and connected to Irfan HomeCare infrastructure.
-    </p>
-  </div>
-);
+import ProfilePage from "@/features/profile/pages/ProfilePage";
+import SchedulePage from "@/features/schedule/pages/SchedulePage";
+import ConsultationHistoryPage from "@/features/consultation-history/pages/ConsultationHistoryPage";
+import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
+import AdminUsersPage from "@/features/admin/pages/AdminUsersPage";
+import AdminMetricsPage from "@/features/admin/pages/AdminMetricsPage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -43,7 +40,7 @@ export const AppRouter: React.FC = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/profile" element={<GenericPage title="User Profile" />} />
+            <Route path="/profile" element={<ProfilePage />} />
 
             {/* Professional Discovery Workflow */}
             <Route path="/professionals" element={<ProfessionalsPage />} />
@@ -68,26 +65,18 @@ export const AppRouter: React.FC = () => {
             {/* Professional Availability Management */}
             <Route path="/availability" element={<AvailabilityPage />} />
 
-            <Route
-              path="/schedule"
-              element={<GenericPage title="Professional Schedule" />}
-            />
-            <Route
-              path="/consultations"
-              element={<GenericPage title="Consultation Records" />}
-            />
-            <Route
-              path="/notifications"
-              element={<GenericPage title="Notifications" />}
-            />
-            <Route
-              path="/admin/users"
-              element={<GenericPage title="User Management" />}
-            />
-            <Route
-              path="/admin/metrics"
-              element={<GenericPage title="Platform Metrics" />}
-            />
+            {/* Professional Schedule Overview */}
+            <Route path="/schedule" element={<SchedulePage />} />
+
+            {/* Consultation History */}
+            <Route path="/consultations" element={<ConsultationHistoryPage />} />
+
+            {/* Notification Center */}
+            <Route path="/notifications" element={<NotificationsPage />} />
+
+            {/* Admin Panel */}
+            <Route path="/admin/users" element={<AdminUsersPage />} />
+            <Route path="/admin/metrics" element={<AdminMetricsPage />} />
           </Route>
         </Route>
 
