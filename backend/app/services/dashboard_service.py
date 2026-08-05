@@ -29,18 +29,32 @@ class DashboardService:
             "completed",
         )
 
+        # Resolve patient names
+        from app.models.patient import Patient
+        from app.models.user import User
+
+        today_appointments_data = []
+        for appointment in today:
+            patient_name = "Unknown Patient"
+            patient = Patient.query.get(appointment.patient_id)
+            if patient:
+                user = User.query.get(patient.user_id)
+                if user:
+                    patient_name = f"{user.first_name} {user.last_name}"
+            
+            today_appointments_data.append({
+                "id": appointment.id,
+                "patient_id": appointment.patient_id,
+                "patient_name": patient_name,
+                "appointment_time": appointment.appointment_time.strftime("%H:%M"),
+                "status": appointment.status,
+            })
+
         return {
             "today": len(today),
             "pending": len(pending),
             "confirmed": len(confirmed),
             "completed": len(completed),
-            "today_appointments": [
-                {
-                    "id": appointment.id,
-                    "patient_id": appointment.patient_id,
-                    "appointment_time": appointment.appointment_time.strftime("%H:%M"),
-                    "status": appointment.status,
-                }
-                for appointment in today
-            ],
+            "today_appointments": today_appointments_data,
         }
+

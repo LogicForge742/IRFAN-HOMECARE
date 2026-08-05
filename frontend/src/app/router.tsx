@@ -1,19 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import {
+    publicRoutes,
     authRoutes,
+    patientRoutes,
+    providerRoutes,
+    adminRoutes,
     protectedRoutes,
 } from "@/routes";
-import { PublicLayout } from "@/layouts";
 import NotFoundPage from "@/pages/not-found/NotFoundPage";
 
 export const router = createBrowserRouter([
-    {
-        element: <PublicLayout />,
-        children: [],
-    },
-
+    ...publicRoutes,
     ...authRoutes,
+    ...patientRoutes,
+    ...providerRoutes,
+    ...adminRoutes,
     ...protectedRoutes,
 
     {

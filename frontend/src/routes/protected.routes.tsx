@@ -14,7 +14,7 @@ export const protectedRoutes: RouteObject[] = [
                 element: <DashboardLayout />,
                 children: [
                     {
-                        path: PATHS.root,
+                        path: PATHS.dashboard,
                         element: <DashboardPage />,
                     },
                 ],

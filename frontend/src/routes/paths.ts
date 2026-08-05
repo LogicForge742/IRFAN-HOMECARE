@@ -1,5 +1,6 @@
 export const PATHS = {
     root: "/",
+    dashboard: "/dashboard",
 
     auth: {
         login: "/login",

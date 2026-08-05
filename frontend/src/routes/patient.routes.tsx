@@ -27,6 +27,14 @@ export const patientRoutes: RouteObject[] = [
                                 path: PATHS.patient.dashboard,
                                 element: <DashboardPage />,
                             },
+                            {
+                                path: PATHS.patient.appointments,
+                                element: <DashboardPage />,
+                            },
+                            {
+                                path: PATHS.patient.payments,
+                                element: <DashboardPage />,
+                            },
                         ],
                     },
                 ],

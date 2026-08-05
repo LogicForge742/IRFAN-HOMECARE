@@ -4,7 +4,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { PATHS } from "./paths";
 
 interface RoleGuardProps {
-    allowedRoles: Array<"admin" | "doctor" | "patient">;
+    allowedRoles: Array<"admin" | "doctor" | "patient" | "professional">;
 }
 
 export function RoleGuard({
