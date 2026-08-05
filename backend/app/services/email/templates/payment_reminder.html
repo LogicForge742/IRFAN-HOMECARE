@@ -1,0 +1,24 @@
+<! vapor-html-template>
+<html>
+<head>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 32px; max-width: 550px; margin: 0 auto; }
+    .header { font-size: 20px; font-weight: bold; color: #3b82f6; margin-bottom: 16px; }
+    .details { background-color: #090d16; border-radius: 12px; padding: 16px; margin: 20px 0; }
+    .btn { display: inline-block; background-color: #3b82f6; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">Irfan HomeCare — Payment Reminder</div>
+    <p>Dear {{ patient_name }},</p>
+    <p>You have an outstanding payment invoice for your recent consultation.</p>
+    <div class="details">
+      <p><strong>Invoice ID:</strong> {{ invoice_id }}</p>
+      <p><strong>Amount Due:</strong> KES {{ amount }}</p>
+    </div>
+    <p><a href="{{ payment_url }}" class="btn">Pay via M-Pesa / Card</a></p>
+  </div>
+</body>
+</html>

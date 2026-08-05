@@ -38,6 +38,7 @@ class AuthService:
             last_name=data["last_name"],
             email=email,
             password_hash=password_hash,
+            role=data.get("role", "patient"),
         )
 
         # Save user

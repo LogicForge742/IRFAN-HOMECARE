@@ -15,7 +15,7 @@ login_schema = LoginSchema()
 
 
 @auth_bp.post("/register")
-@limiter.limit("3 per minute")
+@limiter.limit("20 per minute")
 def register():
 
     try:
@@ -41,7 +41,7 @@ def register():
 
 
 @auth_bp.post("/login")
-@limiter.limit("5 per minute")
+@limiter.limit("10 per minute")
 def login():
     """
     Authenticate user and generate JWT access token

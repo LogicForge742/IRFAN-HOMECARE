@@ -24,5 +24,6 @@ export const ENDPOINTS = {
 
     dashboard: {
         summary: "/dashboard",
+        professional: "/dashboard/professional",
     },
 } as const;

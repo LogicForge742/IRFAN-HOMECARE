@@ -22,6 +22,12 @@ class RegisterSchema(Schema):
         validate=validate.Length(min=8),
     )
 
+    role = fields.Str(
+        required=False,
+        validate=validate.OneOf(["patient", "professional", "admin"]),
+        load_default="patient",
+    )
+
 
 class LoginSchema(Schema):
     class Meta:

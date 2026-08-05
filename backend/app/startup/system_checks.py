@@ -30,7 +30,12 @@ def check_redis_conn(redis_url):
         print(f"CRITICAL STARTUP ERROR: Redis is unreachable: {e}")
         return False
 
-def check_disk_space(path="/", min_gb=1.0):
+def check_disk_space(path="/", min_gb=None):
+    if min_gb is None:
+        try:
+            min_gb = float(os.getenv("MIN_DISK_SPACE_GB", "0.1"))
+        except ValueError:
+            min_gb = 0.1
     total, used, free = shutil.disk_usage(path)
     free_gb = free / (2**30)
     if free_gb < min_gb:

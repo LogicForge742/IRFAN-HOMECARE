@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { PATHS } from "@/routes/paths";
 import { useLogin } from "../hooks/useLogin";
 import { loginSchema, type LoginFormData } from "../schemas/login.schema";
 
@@ -100,12 +102,12 @@ export function LoginForm() {
 
             <p className="text-center text-sm text-muted">
                 Don't have an account?{" "}
-                <button
-                    type="button"
+                <Link
+                    to={PATHS.auth.register}
                     className="font-medium text-primary hover:underline"
                 >
                     Create Account
-                </button>
+                </Link>
             </p>
         </form>
     );

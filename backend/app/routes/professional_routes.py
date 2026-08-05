@@ -14,6 +14,12 @@ professional_bp = Blueprint(
     url_prefix="/api/professionals",
 )
 
+@professional_bp.before_request
+def log_headers():
+    import logging
+    logger = logging.getLogger("request_logger")
+    logger.info(f"Professional BP request headers: {dict(request.headers)}")
+
 
 professional_schema = ProfessionalProfileSchema()
 

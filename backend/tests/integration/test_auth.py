@@ -5,7 +5,7 @@ def test_register_user(client):
         json={
             "first_name": "Milton",
             "last_name": "Ngeno",
-            "email": "milton@example.com",
+            "email": "milton-new@example.com",
             "password": "Password123!",
             "role": "patient",
         },
@@ -134,3 +134,35 @@ def test_get_current_user(
     data = response.get_json()
 
     assert "email" in data["user"]
+
+
+def test_register_professional(client):
+    response = client.post(
+        "/api/auth/register",
+        json={
+            "first_name": "Jane",
+            "last_name": "Provider",
+            "email": "jane-provider@example.com",
+            "password": "Password123!",
+            "role": "professional",
+        },
+    )
+    assert response.status_code == 201
+    data = response.get_json()
+    assert data["data"]["user"]["role"] == "professional"
+
+
+def test_register_admin(client):
+    response = client.post(
+        "/api/auth/register",
+        json={
+            "first_name": "Admin",
+            "last_name": "Sys",
+            "email": "sysadmin@example.com",
+            "password": "Password123!",
+            "role": "admin",
+        },
+    )
+    assert response.status_code == 201
+    data = response.get_json()
+    assert data["data"]["user"]["role"] == "admin"
