@@ -7,6 +7,8 @@ from .medical_record import MedicalRecord
 from .notification import Notification
 from .patient import Patient
 from .payment import Payment
+from .tenant.organization import Organization, OrganizationMember
+from .tenant.tenant import Tenant
 from .user import User
 
 __all__ = [
@@ -20,4 +22,9 @@ __all__ = [
     "Notification",
     "File",
     "Payment",
+    "Organization",
+    "OrganizationMember",
+    "Tenant",
 ]
+
+

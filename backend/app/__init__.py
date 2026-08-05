@@ -14,6 +14,7 @@ from app.core.logging import setup_logging
 from app.errors import register_error_handlers
 from app.extensions import bcrypt, db, jwt, limiter, mail, migrate, talisman
 from app.middleware.request_logger import init_request_logger
+from app.middleware.tenant_context import init_tenant_context
 from app.routes import (
     appointment_bp,
     auth_bp,
@@ -22,13 +23,17 @@ from app.routes import (
     file_bp,
     medical_record_bp,
     notification_bp,
+    organization_bp,
     patient_bp,
     payment_bp,
     professional_bp,
     receipt_bp,
     scheduling_bp,
+    tenant_bp,
+    scheduler_bp,
     video_bp,
 )
+
 from app.routes.health_routes import health_bp
 
 
@@ -47,16 +52,12 @@ def create_app() -> Flask:
 
     setup_logging(app)
     init_request_logger(app)
+    init_tenant_context(app)
 
     app.config.from_object(Config)
     app.config.from_object(EmailConfig)
     app.config.from_object(SecurityConfig)
 
-    CORS(
-        app,
-        origins=["http://localhost:5173"],
-        supports_credentials=True,
-    )
 
     db.init_app(app)
     jwt.init_app(app)
@@ -84,6 +85,17 @@ def create_app() -> Flask:
         app,
         content_security_policy=None,
         force_https=False,
+        strict_transport_security=False,
+        frame_options="SAMEORIGIN",
+    )
+
+    CORS(
+        app,
+        origins=["http://localhost:5173", "http://localhost:3000"],
+        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization", "X-Tenant-ID", "X-Tenant-Slug"],
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        expose_headers=["Content-Type", "Authorization"],
     )
 
     Swagger(
@@ -106,6 +118,12 @@ def create_app() -> Flask:
     app.register_blueprint(payment_bp)
     app.register_blueprint(receipt_bp)
     app.register_blueprint(video_bp)
+    app.register_blueprint(organization_bp)
+    app.register_blueprint(tenant_bp)
+    app.register_blueprint(scheduler_bp)
+
+
+
     from app.features.analytics.routes.analytics_routes import analytics_bp
     app.register_blueprint(analytics_bp)
     from app.features.audit.routes.audit_routes import audit_bp

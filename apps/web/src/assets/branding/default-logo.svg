@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" fill="none">
+  <rect width="240" height="60" rx="12" fill="#0f172a"/>
+  <path d="M24 16C19.578 16 16 19.578 16 24C16 32 28 42 28 42C28 42 40 32 40 24C40 19.578 36.422 16 32 16C29.24 16 26.79 17.39 25.33 19.52M24 24H32M28 20V28" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="52" y="36" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="20" fill="#ffffff" letter-spacing="-0.5">IRFAN <tspan fill="#10b981">HOMECARE</tspan></text>
+  <text x="52" y="48" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="9" fill="#94a3b8" letter-spacing="1.5">MULTI-TENANT HEALTH PLATFORM</text>
+</svg>

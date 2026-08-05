@@ -11,9 +11,12 @@ import {
   FileText,
   Users,
   BarChart,
+  Building2,
   LogOut,
 } from "lucide-react";
 import { useAuthStore } from "@/features/auth/stores/auth-store";
+import { TenantSwitcher } from "@/features/tenant/components/TenantSwitcher";
+
 
 interface SidebarProps {
   className?: string;
@@ -37,6 +40,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "", onNavigate }) 
       case "ADMIN":
         return [
           { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
+          { label: "Tenants Portal", to: "/tenant/settings", icon: Building2 },
+          { label: "Organizations", to: "/admin/organizations", icon: Building2 },
+          { label: "System Scheduler", to: "/admin/scheduler", icon: Clock },
           { label: "User Management", to: "/admin/users", icon: Users },
           { label: "Analytics & Reports", to: "/admin/analytics", icon: BarChart },
           { label: "Platform Metrics", to: "/admin/metrics", icon: BarChart },
@@ -44,6 +50,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "", onNavigate }) 
           { label: "Payments", to: "/payments", icon: CreditCard },
           { label: "Profile", to: "/profile", icon: User },
         ];
+
+
       case "PATIENT":
       default:
         return [
@@ -76,8 +84,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = "", onNavigate }) 
           </div>
         </div>
 
+        {/* Tenant Switcher Context */}
+        <div className="px-1">
+          <TenantSwitcher />
+        </div>
+
         {/* Navigation links */}
         <nav className="space-y-1">
+
           {navItems.map((item) => {
             const Icon = item.icon;
             return (

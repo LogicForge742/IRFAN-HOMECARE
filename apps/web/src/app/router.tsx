@@ -30,6 +30,10 @@ import { AITestPage } from "@/features/ai/pages/AITestPage";
 import { KnowledgeBasePage } from "@/features/rag/pages/KnowledgeBasePage";
 import { FHIRPage } from "@/features/fhir/pages/FHIRPage";
 import { SSOPage } from "@/features/sso/pages/SSOPage";
+import OrganizationsPage from "@/features/organizations/pages/OrganizationsPage";
+import { OrganizationDetailsPage } from "@/features/organizations/pages/OrganizationDetailsPage";
+import TenantManagementPage from "@/features/tenant/pages/TenantManagementPage";
+import SchedulerDashboard from "@/features/scheduler/pages/SchedulerDashboard";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -90,14 +94,24 @@ export const AppRouter: React.FC = () => {
             {/* Notification Center */}
             <Route path="/notifications" element={<NotificationsPage />} />
 
-            {/* Admin Panel */}
+            {/* Tenant Management */}
+            <Route path="/tenant/settings" element={<TenantManagementPage />} />
+
+            {/* Admin Panel & Organizations */}
+            <Route path="/admin/organizations" element={<OrganizationsPage />} />
+            <Route path="/admin/organizations/:id" element={<OrganizationDetailsPage />} />
+            <Route path="/admin/tenants" element={<TenantManagementPage />} />
+            <Route path="/admin/scheduler" element={<SchedulerDashboard />} />
             <Route path="/admin/users" element={<AdminUsersPage />} />
             <Route path="/admin/metrics" element={<AdminMetricsPage />} />
             <Route path="/admin/analytics" element={<AnalyticsDashboardPage />} />
             <Route path="/admin/reports" element={<AnalyticsDashboardPage />} />
           </Route>
+
           <Route path="/consultation/video/:roomId" element={<VideoConsultationPage />} />
         </Route>
+
+
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />

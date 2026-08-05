@@ -5,11 +5,15 @@ from .dashboard_routes import dashboard_bp
 from .file_routes import file_bp
 from .medical_record_routes import medical_record_bp
 from .notification_routes import notification_bp
+
 from .patient_routes import patient_bp
 from .payment_routes import payment_bp
 from .professional_routes import professional_bp
 from .receipt_routes import receipt_bp
 from .scheduling_routes import scheduling_bp
+from .tenant.organization_routes import organization_bp
+from .tenant.tenant_routes import tenant_bp
+from .system.scheduler_routes import scheduler_bp
 from .video_routes import video_bp
 
 __all__ = [
@@ -26,5 +30,11 @@ __all__ = [
     "payment_bp",
     "receipt_bp",
     "video_bp",
+    "organization_bp",
+    "tenant_bp",
+    "scheduler_bp",
 ]
+
+
+
 
