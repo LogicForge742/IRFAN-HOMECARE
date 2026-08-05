@@ -1,10 +1,10 @@
-# 🏥 Irfan HomeCare — Premium Home Healthcare Platform
+# Irfan HomeCare — Premium Home Healthcare Platform
 
 A state-of-the-art, production-ready healthcare management platform featuring role-based dashboards, multi-tenant scheduling engines, secure checkout flows, and clinical telemedicine capabilities.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 - **Multi-Tenant Architecture**: Dedicated tenant and organization isolation for scalable clinical enterprise management.
 - **Dynamic Role-Based Dashboards**: Customized workflows and statistics for Patients, Healthcare Professionals, and Administrators.
@@ -14,7 +14,7 @@ A state-of-the-art, production-ready healthcare management platform featuring ro
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 The project is structured as a monorepo containing the following workspaces:
 
@@ -29,7 +29,7 @@ The project is structured as a monorepo containing the following workspaces:
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technologies |
 | :--- | :--- |
@@ -40,7 +40,7 @@ The project is structured as a monorepo containing the following workspaces:
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 ### 1. Prerequisites
 Ensure you have the following installed on your system:
@@ -110,7 +110,7 @@ Ensure you have the following installed on your system:
 
 ---
 
-## 🔒 Security & Compliance
+## Security & Compliance
 
 - **JWT Authentication**: Secure transport-level and session authentication.
 - **Strict CORS & Talisman Middleware**: Hardened request policies preventing cross-site scripting (XSS) and injection vectors.
